@@ -1,0 +1,63 @@
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --primary-color: #bb86fc;
+}
+
+body.dark-mode {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  touch-action: manipulation;
+}
+
+canvas {
+  touch-action: manipulation;
+}
+
+/* Add to style.css */
+#color-picker-btn {
+  display: inline-block;
+  border-radius: 9999px;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid #d1d5db;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s, border 0.2s;
+}
+#color-picker-btn:active {
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.12);
+  border-color: #6366f1;
+}
+#color-picker {
+  opacity: 0;
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  border-radius: 5px;
+  padding: 3px;
+}
+
+#color-picker::-webkit-color-swatch {
+  border-radius: 3px;
+  border: none;
+}
+
+::selection {
+  background: #ffe066; /* Light yellow highlight */
+  color: #1a1a1a;     /* Dark text when selected */
+}
+::-moz-selection {
+  background: #ffe066;
+  color: #1a1a1a;
+}
