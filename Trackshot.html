@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Shot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="trackShot.css">
+  <style>
+    .dark-mode {
+      background-color: #1a1d23;
+      color: #fff;
+    }
+    .dark-mode .track-shot {
+      background-color: #2f343a;
+    }
+    .dark-mode .shot-type-stack-container {
+      background-color: #2f343a;
+    }
+    .dark-mode .shot-type-card {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-type-card.basic {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-type-card.rail {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-type-card.cut {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-type-card.spin {
+      background-color: #3b4148;
+    }
+    .dark-mode .cue-ball-canvas {
+      background-color: #3b4148;
+    }
+    .dark-mode .power-slider {
+      background-color: #3b4148;
+    }
+    .dark-mode .notes {
+      background-color: #3b4148;
+    }
+    .dark-mode .outcome-btn {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-history-table {
+      background-color: #2f343a;
+    }
+    .dark-mode .shot-history-table th {
+      background-color: #3b4148;
+    }
+    .dark-mode .shot-history-table td {
+      background-color: #3b4148;
+    }
+  </style>
+</head>
+<body>
+  <!-- Theme Toggle Button -->
+  <button
+    id="themeToggle"
+    class="bg-gray-500 hover:bg-gray-600 text-white font-bold p-2 rounded-full w-10 h-10 flex items-center justify-center text-lg transition duration-150 ease-in-out btn-press shadow-md"
+    title="Toggle Dark Mode"
+    style="position: absolute; top: 20px; right: 20px; z-index: 10;"
+  >
+    <div class="rounded-full w-12 h-12 flex items-center justify-center">
+      <svg id="theme-icon-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v2.25m6.364 1.636l-1.591 1.591m4.227 4.023h-2.25M17.364 17.364l-1.591-1.591M12 17.25v2.25m-4.364-2.136l1.591-1.591" />
+      </svg>
+      <svg id="theme-icon-dark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+      </svg>
+    </div>
+  </button>
+  <!-- Track Your Shot Module -->
+  <div class="track-shot">
+    <h3 class="text-lg font-semibold mb-4 text-center">Track Your Shot</h3>
+
+    <!-- Shot Type (Vertical Card Stack) -->
+    <div class="shot-type-stack-container">
+      <label class="block text-xs mb-2">Shot Type</label>
+      <div class="shot-type-stack" id="shot-type-stack">
+        <!-- Basic Shots -->
+        <div class="shot-type-card basic offset-left">
+          <h4>Straight Shot</h4>
+          <button class="select-shot-btn" data-type="straight">Select Shot</button>
+        </div>
+        <div class="shot-type-card basic offset-right">
+          <h4>Bank Shot</h4>
+          <button class="select-shot-btn" data-type="bank">Select Shot</button>
+        </div>
+        <div class="shot-type-card basic offset-left">
+          <h4>Combination</h4>
+          <button class="select-shot-btn" data-type="combination">Select Shot</button>
+        </div>
+        <div class="shot-type-card basic offset-right">
+          <h4>Safety</h4>
+          <button class="select-shot-btn" data-type="safety">Select Shot</button>
+        </div>
+        <!-- Rail Shots -->
+        <div class="shot-type-card rail offset-left">
+          <h4>Rail Frozen</h4>
+          <button class="select-shot-btn" data-type="rail-frozen">Select Shot</button>
+        </div>
+        <div class="shot-type-card rail offset-right">
+          <h4>Rail Gap</h4>
+          <button class="select-shot-btn" data-type="rail-gap">Select Shot</button>
+        </div>
+        <div class="shot-type-card rail offset-left">
+          <h4>3 Rail Cross</h4>
+          <button class="select-shot-btn" data-type="3-rail-cross">Select Shot</button>
+        </div>
+        <div class="shot-type-card rail offset-right">
+          <h4>1 Rail</h4>
+          <button class="select-shot-btn" data-type="1-rail">Select Shot</button>
+        </div>
+        <!-- Cut Shots -->
+        <div class="shot-type-card cut offset-left">
+          <h4>Thin Cut</h4>
+          <button class="select-shot-btn" data-type="thin-cut">Select Shot</button>
+        </div>
+        <div class="shot-type-card cut offset-right">
+          <h4>Sharp Cut</h4>
+          <button class="select-shot-btn" data-type="sharp-cut">Select Shot</button>
+        </div>
+        <!-- Spin Shots -->
+        <div class="shot-type-card spin offset-left">
+          <h4>Stun</h4>
+          <button class="select-shot-btn" data-type="stun">Select Shot</button>
+        </div>
+        <div class="shot-type-card spin offset-right">
+          <h4>Draw</h4>
+          <button class="select-shot-btn" data-type="draw">Select Shot</button>
+        </div>
+      </div>
+      <input type="range" class="scroll-slider" id="scroll-slider" min="0" max="100" value="0">
+    </div>
+
+    <!-- Difficulty -->
+    <div class="mb-4 narrow ">
+      <label class="block text-xs mb-2">Difficulty</label>
+      <select id="difficulty" class="text-md text-center">
+        <option value="easy" selected>Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+        <option value="expert">Expert</option>
+        <option value="master">Master</option>
+      </select>
+    </div>
+
+    <!-- Cue Ball Hit Position -->
+    <div class="flowy-row">
+      <div class="narrow">
+        <label class="block text-xs mb-2">Cue Ball Hit</label>
+        <canvas id="cue-ball-canvas" class="cue-ball-canvas" width="60" height="60"></canvas>
+      </div>
+      <div class="narrow offset-left ">
+        <p class="text-sm">X: <span id="hit-x">0</span>%</p>
+        <p class="text-sm">Y: <span id="hit-y">0</span>%</p>
+      </div>
+    </div>
+
+    <!-- Shot Power -->
+    <div class="mb-4 wide">
+      <label class="block text-xs mb-2">Shot Power</label>
+      <input type="range" id="power-slider" class="power-slider" min="0" max="100" value="50">
+      <p class="text-sm mt-2">Power: <span id="power-value">50</span>%</p>
+    </div>
+
+    <!-- Notes -->
+    <div class="mb-4 narrow">
+      <label class="block text-xs mb-2">Notes</label>
+      <textarea id="notes" class="w-full text-center" rows="2" placeholder="Add shot details here..."></textarea>
+    </div>
+
+    <!-- Outcome -->
+    <div class="flex gap-3 mb-4">
+      <button id="success-btn" class="outcome-btn success flex-1 flex items-center justify-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Success
+      </button>
+      <button id="miss-btn" class="outcome-btn miss flex-1 flex items-center justify-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        Miss
+      </button>
+    </div>
+
+    <!-- Shot History -->
+    <div>
+      <h4 class="text-sm font-semibold mb-2">Shot History</h4>
+      <div class="overflow-x-auto">
+        <table id="shot-history-table" class="shot-history-table">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Diff</th>
+              <th>Hit</th>
+              <th>Pow</th>
+              <th>Notes</th>
+              <th>Out</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let selectedShotType = null;
+    let selectedDifficulty = null;
+    let hitPosition = { x: 0, y: 0 };
+    let shotPower = 50;
+    let shots = [];
+
+    // DOM Elements
+    const shotTypeStack = document.getElementById('shot-type-stack');
+    const scrollSlider = document.getElementById('scroll-slider');
+    const shotTypeButtons = document.querySelectorAll('.select-shot-btn');
+    const difficultySelect = document.getElementById('difficulty');
+    const cueBallCanvas = document.getElementById('cue-ball-canvas');
+    const ctx = cueBallCanvas.getContext('2d');
+    const hitXDisplay = document.getElementById('hit-x');
+    const hitYDisplay = document.getElementById('hit-y');
+    const powerSlider = document.getElementById('power-slider');
+    const powerValueDisplay = document.getElementById('power-value');
+    const notesTextarea = document.getElementById('notes');
+    const successButton = document.getElementById('success-btn');
+    const missButton = document.getElementById('miss-btn');
+    const shotHistoryTableBody = document.querySelector('#shot-history-table tbody');
+
+    // Draw Cue Ball and Initial Hit Marker
+    function drawCueBall() {
+      const radius = cueBallCanvas.width / 2;
+      ctx.clearRect(0, 0, cueBallCanvas.width, cueBallCanvas.height);
+      
+      ctx.beginPath();
+      ctx.arc(radius, radius, radius - 2, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      
+      ctx.strokeStyle = '#718096';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(radius, 0);
+      ctx.lineTo(radius, cueBallCanvas.height);
+      ctx.moveTo(0, radius);
+      ctx.lineTo(cueBallCanvas.width, radius);
+      ctx.stroke();
+
+      const markerX = radius + (hitPosition.x / 100) * (radius - 10);
+      const markerY = radius + (hitPosition.y / 100) * (radius - 10);
+      ctx.beginPath();
+      ctx.arc(markerX, markerY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'red';
+      ctx.fill();
+    }
+
+    // Initialize cue ball
+    drawCueBall();
+
+    // Shot Type Scroll Slider
+    const totalCards = shotTypeStack.children.length;
+    const cardHeight = 52; // Height of each card (40px height + 6px margin + 6px padding)
+    const maxScroll = Math.max(0, totalCards * cardHeight - shotTypeStack.clientHeight);
+
+    scrollSlider.max = maxScroll;
+    scrollSlider.addEventListener('input', () => {
+      shotTypeStack.scrollTop = parseInt(scrollSlider.value);
+    });
+
+    // Update slider value when scrolling manually
+    shotTypeStack.addEventListener('scroll', () => {
+      scrollSlider.value = shotTypeStack.scrollTop;
+    });
+
+    // Shot Type Selection
+    shotTypeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        shotTypeButtons.forEach(btn => btn.parentElement.classList.remove('active'));
+        button.parentElement.classList.add('active');
+        selectedShotType = button.dataset.type;
+      });
+    });
+
+    // Difficulty Selection
+    difficultySelect.addEventListener('change', () => {
+      selectedDifficulty = difficultySelect.value;
+    });
+
+    // Cue Ball Hit Position
+    cueBallCanvas.addEventListener('click', (e) => {
+      const rect = cueBallCanvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const radius = cueBallCanvas.width / 2;
+
+      hitPosition.x = ((x - radius) / (radius - 10)) * 100;
+      hitPosition.y = ((y - radius) / (radius - 10)) * 100;
+
+      hitPosition.x = Math.max(-100, Math.min(100, hitPosition.x));
+      hitPosition.y = Math.max(-100, Math.min(100, hitPosition.y));
+
+      hitXDisplay.textContent = hitPosition.x.toFixed(1);
+      hitYDisplay.textContent = hitPosition.y.toFixed(1);
+      hitXDisplay.classList.add('animate-update');
+      hitYDisplay.classList.add('animate-update');
+      drawCueBall();
+    });
+
+    // Shot Power Slider
+    powerSlider.addEventListener('input', () => {
+      shotPower = parseInt(powerSlider.value);
+      powerValueDisplay.textContent = shotPower;
+      powerValueDisplay.classList.add('animate-update');
+    });
+
+    // Record Shot
+    function recordShot(outcome) {
+      if (!selectedShotType || !selectedDifficulty) {
+        alert('Please select a shot type and difficulty.');
+        return;
+      }
+
+      const shot = {
+        type: selectedShotType,
+        difficulty: selectedDifficulty,
+        hitPosition: { ...hitPosition },
+        power: shotPower,
+        notes: notesTextarea.value,
+        outcome: outcome,
+        timestamp: new Date().toLocaleString()
+      };
+
+      shots.push(shot);
+      updateShotHistory();
+
+      // Reset form
+      shotTypeButtons.forEach(btn => btn.parentElement.classList.remove('active'));
+      shotTypeButtons[0].parentElement.classList.add('active');
+      selectedShotType = 'straight';
+      difficultySelect.value = 'easy';
+      selectedDifficulty = 'easy';
+      hitPosition = { x: 0, y: 0 };
+      hitXDisplay.textContent = '0';
+      hitYDisplay.textContent = '0';
+      shotPower = 50;
+      powerSlider.value = 50;
+      powerValueDisplay.textContent = '50';
+      notesTextarea.value = '';
+      scrollSlider.value = 0;
+      shotTypeStack.scrollTop = 0;
+      drawCueBall();
+    }
+
+    // Update Shot History Table
+    function updateShotHistory() {
+      shotHistoryTableBody.innerHTML = '';
+      shots.forEach(shot => {
+        const row = document.createElement('tr');
+        const displayType = shot.type
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+        const displayDifficulty = shot.difficulty.charAt(0).toUpperCase() + shot.difficulty.slice(1);
+        row.innerHTML = `
+          <td>${displayType}</td>
+          <td>${displayDifficulty}</td>
+          <td>X: ${shot.hitPosition.x.toFixed(1)}%, Y: ${shot.hitPosition.y.toFixed(1)}%</td>
+          <td>${shot.power}%</td>
+          <td>${shot.notes || '-'}</td>
+          <td class="${shot.outcome === 'success' ? 'text-[#48BB78]' : 'text-[#F56565]'}">
+            ${shot.outcome === 'success' ? 'Success' : 'Miss'}
+          </td>
+        `;
+        shotHistoryTableBody.appendChild(row);
+      });
+    }
+
+    // Event Listeners for Outcome Buttons
+    successButton.addEventListener('click', () => recordShot('success'));
+    missButton.addEventListener('click', () => recordShot('miss'));
+
+    // Initialize default selections
+    shotTypeButtons[0].parentElement.classList.add('active');
+    selectedShotType = 'straight';
+    selectedDifficulty = 'easy';
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIconLight = document.getElementById('theme-icon-light');
+    const themeIconDark = document.getElementById('theme-icon-dark');
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+      themeIconLight.classList.toggle('hidden', isDarkMode);
+      themeIconDark.classList.toggle('hidden', !isDarkMode);
+      themeToggleBtn.classList.add('ring-2', 'ring-offset-2', 'ring-[#8B5A2B]');
+      setTimeout(() => themeToggleBtn.classList.remove('ring-2', 'ring-offset-2', 'ring-[#8B5A2B]'), 300);
+    }
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIconLight.classList.add('hidden');
+        themeIconDark.classList.remove('hidden');
+      } else {
+        document.body.classList.remove('dark-mode');
+        themeIconLight.classList.remove('hidden');
+        themeIconDark.classList.add('hidden');
+      }
+    }
+    themeToggleBtn.addEventListener('click', toggleTheme);
+    applySavedTheme();
+  </script>
+</body>
+</html>

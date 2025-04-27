@@ -6,6 +6,7 @@
     <title>Pool Control Center & Canvas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="icrV1.css">
   </head>
 
   <body class="bg-gray-100 p-4 font-sans">
@@ -18,7 +19,7 @@
           <h2 class="text-xl font-semibold text-gray-700 mr-auto">
             Pool Table
           </h2>
-          <!-- Drawing Mode Controls (inline with other controls, styled to match) -->
+          <!-- Drawing Mode Controls -->
           <div id="drawing-mode-controls" class="flex gap-2 items-center mr-2">
             <label class="flex items-center gap-1 px-4 py-2 bg-white border border-gray-300 rounded-full shadow cursor-pointer transition duration-150 ease-in-out btn-press">
               <input type="radio" name="drawing-mode" value="free-draw" class="form-radio" checked>
@@ -38,7 +39,7 @@
             </label>
             <label class="flex items-center gap-1 px-4 py-2 bg-white border border-gray-300 rounded-full shadow cursor-pointer transition duration-150 ease-in-out btn-press">
               <input type="radio" name="drawing-mode" value="erase" class="form-radio">
-              <img src="images/eraser.png" alt="Erase" class="h-6 w-6" >
+              <img src="images/eraser.png" alt="Erase" class="h-6 w-6">
             </label>
           </div>
           <button
@@ -299,9 +300,333 @@
             </button>
           </div>
         </div>
+
+        <!-- Track Your Shot Module -->
+        <div class="mt-4 pt-4 border-t border-gray-400">
+          <div class="track-shot">
+            <h3 class="text-base font-semibold mb-3 text-center">Track Your Shot</h3>
+
+            <!-- Shot Type (Vertical Card Stack) -->
+            <div class="shot-type-stack-container">
+              <label class="block text-xs mb-1">Shot Type</label>
+              <div class="shot-type-stack" id="shot-type-stack">
+                <!-- Basic Shots -->
+                <div class="shot-type-card basic offset-left">
+                  <h3>Straight Shot</h3>
+                  <button class="select-shot-btn" data-type="straight">Select Shot</button>
+                </div>
+                <div class="shot-type-card basic offset-right">
+                  <h3>Bank Shot</h3>
+                  <button class="select-shot-btn" data-type="bank">Select Shot</button>
+                </div>
+                <div class="shot-type-card basic offset-left">
+                  <h3>Combination</h3>
+                  <button class="select-shot-btn" data-type="combination">Select Shot</button>
+                </div>
+                <div class="shot-type-card basic offset-right">
+                  <h3>Safety</h3>
+                  <button class="select-shot-btn" data-type="safety">Select Shot</button>
+                </div>
+                <!-- Rail Shots -->
+                <div class="shot-type-card rail offset-left">
+                  <h3>Rail Frozen</h3>
+                  <button class="select-shot-btn" data-type="rail-frozen">Select Shot</button>
+                </div>
+                <div class="shot-type-card rail offset-right">
+                  <h3>Rail Gap</h3>
+                  <button class="select-shot-btn" data-type="rail-gap">Select Shot</button>
+                </div>
+                <div class="shot-type-card rail offset-left">
+                  <h3>3 Rail Cross</h3>
+                  <button class="select-shot-btn" data-type="3-rail-cross">Select Shot</button>
+                </div>
+                <div class="shot-type-card rail offset-right">
+                  <h3>1 Rail</h3>
+                  <button class="select-shot-btn" data-type="1-rail">Select Shot</button>
+                </div>
+                <!-- Cut Shots -->
+                <div class="shot-type-card cut offset-left">
+                  <h3>Thin Cut</h3>
+                  <button class="select-shot-btn" data-type="thin-cut">Select Shot</button>
+                </div>
+                <div class="shot-type-card cut offset-right">
+                  <h3>Sharp Cut</h3>
+                  <button class="select-shot-btn" data-type="sharp-cut">Select Shot</button>
+                </div>
+                <!-- Spin Shots -->
+                <div class="shot-type-card spin offset-left">
+                  <h3>Stun</h3>
+                  <button class="select-shot-btn" data-type="stun">Select Shot</button>
+                </div>
+                <div class="shot-type-card spin offset-right">
+                  <h3>Draw</h3>
+                  <button class="select-shot-btn" data-type="draw">Select Shot</button>
+                </div>
+              </div>
+              <input type="range" class="scroll-slider" id="scroll-slider" min="0" max="100" value="0">
+            </div>
+
+            <!-- Difficulty -->
+            <div class="mb-3 narrow offset-right">
+              <label class="block text-xs mb-1">Difficulty</label>
+              <select id="difficulty" class="text-sm text-center">
+                <option value="easy" selected>Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+                <option value="expert">Expert</option>
+                <option value="master">Master</option>
+              </select>
+            </div>
+
+            <!-- Cue Ball Hit Position -->
+            <div class="flowy-row">
+              <div class="narrow">
+                <label class="block text-xs mb-1">Cue Ball Hit</label>
+                <canvas id="cue-ball-canvas" class="cue-ball-canvas" width="70" height="70"></canvas>
+              </div>
+              <div class="narrow offset-left">
+                <p class="text-sm">X: <span id="hit-x">0</span>%</p>
+                <p class="text-sm">Y: <span id="hit-y">0</span>%</p>
+              </div>
+            </div>
+
+            <!-- Shot Power -->
+            <div class="mb-3 wide">
+              <label class="block text-xs mb-1">Shot Power</label>
+              <input type="range" id="power-slider" class="power-slider" min="0" max="100" value="50">
+              <p class="text-xs mt-1">Power: <span id="power-value">50</span>%</p>
+            </div>
+
+            <!-- Notes -->
+            <div class="mb-3 narrow">
+              <label class="block text-xs mb-1">Notes</label>
+              <textarea id="notes" class="w-full text-center text-sm" rows="2" placeholder="Add shot details here..."></textarea>
+            </div>
+
+            <!-- Outcome -->
+            <div class="flex gap-2 mb-3">
+              <button id="success-btn" class="outcome-btn success flex-1 flex items-center justify-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Success
+              </button>
+              <button id="miss-btn" class="outcome-btn miss flex-1 flex items-center justify-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Miss
+              </button>
+            </div>
+
+            <!-- Shot History -->
+            <div>
+              <h4 class="text-xs font-semibold mb-1">Shot History</h4>
+              <div class="overflow-x-auto">
+                <table id="shot-history-table" class="shot-history-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Diff</th>
+                      <th>Hit</th>
+                      <th>Pow</th>
+                      <th>Notes</th>
+                      <th>Out</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <script src="javascript.js"></script> 
+    <script src="javascript.js"></script>
+    <script>
+      // Track Your Shot Module JavaScript (Merged from Trackshot.html)
+      (function() {
+        // State
+        let selectedShotType = null;
+        let selectedDifficulty = null;
+        let hitPosition = { x: 0, y: 0 };
+        let shotPower = 50;
+        let shots = [];
+
+        // DOM Elements
+        const shotTypeStack = document.getElementById('shot-type-stack');
+        const scrollSlider = document.getElementById('scroll-slider');
+        const shotTypeButtons = document.querySelectorAll('.select-shot-btn');
+        const difficultySelect = document.getElementById('difficulty');
+        const cueBallCanvas = document.getElementById('cue-ball-canvas');
+        const ctx = cueBallCanvas.getContext('2d');
+        const hitXDisplay = document.getElementById('hit-x');
+        const hitYDisplay = document.getElementById('hit-y');
+        const powerSlider = document.getElementById('power-slider');
+        const powerValueDisplay = document.getElementById('power-value');
+        const notesTextarea = document.getElementById('notes');
+        const successButton = document.getElementById('success-btn');
+        const missButton = document.getElementById('miss-btn');
+        const shotHistoryTableBody = document.querySelector('#shot-history-table tbody');
+
+        // Draw Cue Ball and Initial Hit Marker
+        function drawCueBall() {
+          const radius = cueBallCanvas.width / 2;
+          ctx.clearRect(0, 0, cueBallCanvas.width, cueBallCanvas.height);
+          
+          ctx.beginPath();
+          ctx.arc(radius, radius, radius - 2, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          
+          ctx.strokeStyle = '#9CA3AF';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(radius, 0);
+          ctx.lineTo(radius, cueBallCanvas.height);
+          ctx.moveTo(0, radius);
+          ctx.lineTo(cueBallCanvas.width, radius);
+          ctx.stroke();
+
+          const markerMargin = Math.max(10, radius * 0.15); // 15% of radius or at least 10px
+          const markerX = radius + (hitPosition.x / 100) * (radius - markerMargin);
+          const markerY = radius + (hitPosition.y / 100) * (radius - markerMargin);
+          ctx.beginPath();
+          ctx.arc(markerX, markerY, Math.max(3, radius * 0.06), 0, Math.PI * 2); // marker scales with canvas
+          ctx.fillStyle = 'red';
+          ctx.fill();
+        }
+
+        drawCueBall();
+
+        // Shot Type Scroll Slider
+        const totalCards = shotTypeStack.children.length;
+        const cardHeight = 46; // Height of each card (36px height + 4px margin + 6px padding)
+        const maxScroll = Math.max(0, totalCards * cardHeight - shotTypeStack.clientHeight);
+
+        scrollSlider.max = maxScroll;
+        scrollSlider.addEventListener('input', () => {
+          shotTypeStack.scrollTop = parseInt(scrollSlider.value);
+        });
+
+        shotTypeStack.addEventListener('scroll', () => {
+          scrollSlider.value = shotTypeStack.scrollTop;
+        });
+
+        // Shot Type Selection
+        shotTypeButtons.forEach(button => {
+          button.addEventListener('click', () => {
+            shotTypeButtons.forEach(btn => btn.parentElement.classList.remove('active'));
+            button.parentElement.classList.add('active');
+            selectedShotType = button.dataset.type;
+          });
+        });
+
+        // Difficulty Selection
+        difficultySelect.addEventListener('change', () => {
+          selectedDifficulty = difficultySelect.value;
+        });
+
+        // Cue Ball Hit Position
+        cueBallCanvas.addEventListener('click', (e) => {
+          const rect = cueBallCanvas.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const radius = cueBallCanvas.width / 2;
+          const markerMargin = Math.max(10, radius * 0.15); // 15% of radius or at least 10px
+
+          hitPosition.x = ((x - radius) / (radius - markerMargin)) * 100;
+          hitPosition.y = ((y - radius) / (radius - markerMargin)) * 100;
+
+          hitPosition.x = Math.max(-100, Math.min(100, hitPosition.x));
+          hitPosition.y = Math.max(-100, Math.min(100, hitPosition.y));
+
+          hitXDisplay.textContent = hitPosition.x.toFixed(1);
+          hitYDisplay.textContent = hitPosition.y.toFixed(1);
+          hitXDisplay.classList.add('animate-update');
+          hitYDisplay.classList.add('animate-update');
+          drawCueBall();
+        });
+
+        // Shot Power Slider
+        powerSlider.addEventListener('input', () => {
+          shotPower = parseInt(powerSlider.value);
+          powerValueDisplay.textContent = shotPower;
+          powerValueDisplay.classList.add('animate-update');
+        });
+
+        // Record Shot
+        function recordShot(outcome) {
+          if (!selectedShotType || !selectedDifficulty) {
+            alert('Please select a shot type and difficulty.');
+            return;
+          }
+
+          const shot = {
+            type: selectedShotType,
+            difficulty: selectedDifficulty,
+            hitPosition: { ...hitPosition },
+            power: shotPower,
+            notes: notesTextarea.value,
+            outcome: outcome,
+            timestamp: new Date().toLocaleString()
+          };
+
+          shots.push(shot);
+          updateShotHistory();
+
+          // Reset form
+          shotTypeButtons.forEach(btn => btn.parentElement.classList.remove('active'));
+          shotTypeButtons[0].parentElement.classList.add('active');
+          selectedShotType = 'straight';
+          difficultySelect.value = 'easy';
+          selectedDifficulty = 'easy';
+          hitPosition = { x: 0, y: 0 };
+          hitXDisplay.textContent = '0';
+          hitYDisplay.textContent = '0';
+          shotPower = 50;
+          powerSlider.value = 50;
+          powerValueDisplay.textContent = '50';
+          notesTextarea.value = '';
+          scrollSlider.value = 0;
+          shotTypeStack.scrollTop = 0;
+          drawCueBall();
+        }
+
+        // Update Shot History Table
+        function updateShotHistory() {
+          shotHistoryTableBody.innerHTML = '';
+          shots.forEach(shot => {
+            const row = document.createElement('tr');
+            const displayType = shot.type
+              .split('-')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+            const displayDifficulty = shot.difficulty.charAt(0).toUpperCase() + shot.difficulty.slice(1);
+            row.innerHTML = `
+              <td>${displayType}</td>
+              <td>${displayDifficulty}</td>
+              <td>X: ${shot.hitPosition.x.toFixed(1)}%, Y: ${shot.hitPosition.y.toFixed(1)}%</td>
+              <td>${shot.power}%</td>
+              <td>${shot.notes || '-'}</td>
+              <td class="${shot.outcome === 'success' ? 'text-green-600' : 'text-red-600'}">
+                ${shot.outcome === 'success' ? 'Success' : 'Miss'}
+              </td>
+            `;
+            shotHistoryTableBody.appendChild(row);
+          });
+        }
+
+        // Event Listeners for Outcome Buttons
+        successButton.addEventListener('click', () => recordShot('success'));
+        missButton.addEventListener('click', () => recordShot('miss'));
+
+        // Initialize default selections
+        shotTypeButtons[0].parentElement.classList.add('active');
+        selectedShotType = 'straight';
+        selectedDifficulty = 'easy';
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,339 @@
+
+  /* --- Track Your Shot Styles (Merged from trackShot.css) --- */
+  /* Adjustments for Track Your Shot module to match Pool Control Center */
+  .track-shot {
+    background: #E5E7EB; /* bg-gray-200 */
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #374151; /* text-gray-700 */
+  }
+  /* Shot Type Card Stack */
+  .shot-type-stack-container {
+    position: relative;
+    margin-bottom: 12px;
+  }
+  .shot-type-stack {
+    max-height: 120px; /* Adjusted for control module space */
+    overflow-y: hidden;
+    padding: 8px;
+  }
+  .shot-type-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(229, 231, 235, 0.7));
+    border-radius: 10px;
+    padding: 6px;
+    margin: 4px 0;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 36px;
+  }
+  .shot-type-card:hover {
+    transform: scale(1.02) translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .shot-type-card.active {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .shot-type-card.basic {
+    border-top: 3px solid #4A90E2;
+  }
+  .shot-type-card.rail {
+    border-top: 3px solid #9B59B6;
+  }
+  .shot-type-card.cut {
+    border-top: 3px solid #E91E63;
+  }
+  .shot-type-card.spin {
+    border-top: 3px solid #F1C40F;
+  }
+  .shot-type-card h4 {
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .shot-type-card button {
+    background: #FFFFFF;
+    color: #374151;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 9px;
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .shot-type-card button:hover {
+    background: #F3F4F6;
+    transform: scale(1.05);
+  }
+  /* Scroll slider for shot type stack */
+  .scroll-slider {
+    width: 100%;
+    height: 5px;
+    background: #D1D5DB;
+    border-radius: 2px;
+    appearance: none;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  .scroll-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: #6B7280;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .scroll-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .scroll-slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: #6B7280;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .scroll-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+  }
+  /* Dropdown styling */
+  .track-shot select {
+    background: #F9FAFB;
+    color: #374151;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 6px;
+    width: 100%;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23374151" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  .track-shot select:hover {
+    border-color: #9CA3AF;
+    box-shadow: 0 0 6px rgba(156, 163, 175, 0.3);
+  }
+  .track-shot select:focus {
+    outline: none;
+    border-color: #9CA3AF;
+    box-shadow: 0 0 6px rgba(156, 163, 175, 0.5);
+  }
+  .track-shot option, .track-shot optgroup {
+    background: #F9FAFB;
+    color: #374151;
+  }
+  .track-shot optgroup {
+    font-weight: bold;
+  }
+  /* Shot Power Slider */
+  .track-shot input[type="range"].power-slider {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #D1D5DB, #9CA3AF);
+    border-radius: 3px;
+    appearance: none;
+    cursor: pointer;
+  }
+  .track-shot input[type="range"].power-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #6B7280;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(107, 114, 128, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .track-shot input[type="range"].power-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .track-shot input[type="range"].power-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #6B7280;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(107, 114, 128, 0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .track-shot input[type="range"].power-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+  }
+  /* Cue ball canvas */
+  .track-shot .cue-ball-canvas {
+    border: 2px solid #9CA3AF;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(107, 114, 128, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+  .track-shot .cue-ball-canvas:hover {
+    box-shadow: 0 0 12px rgba(107, 114, 128, 0.5);
+  }
+  /* Textarea */
+  .track-shot textarea {
+    background: #F9FAFB;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    color: #374151;
+    padding: 6px;
+    width: 100%;
+    resize: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  .track-shot textarea:focus {
+    border-color: #9CA3AF;
+    box-shadow: 0 0 6px rgba(156, 163, 175, 0.5);
+    outline: none;
+  }
+  /* Outcome buttons */
+  .track-shot .outcome-btn {
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .track-shot .outcome-btn.success {
+    background: linear-gradient(135deg, #10B981, #3B82F6);
+  }
+  .track-shot .outcome-btn.miss {
+    background: linear-gradient(135deg, #EF4444, #F97316);
+  }
+  .track-shot .outcome-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  /* Shot history table */
+  .track-shot .shot-history-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .track-shot .shot-history-table th,
+  .track-shot .shot-history-table td {
+    padding: 6px;
+    border: 1px solid #D1D5DB;
+    text-align: left;
+    transition: background 0.3s ease;
+  }
+  .track-shot .shot-history-table th {
+    background: #D1D5DB;
+  }
+  .track-shot .shot-history-table td {
+    background: #F9FAFB;
+  }
+  .track-shot .shot-history-table tr {
+    animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  /* Flowy layout adjustments */
+  .track-shot .flowy-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .track-shot .narrow {
+    flex: 1;
+    min-width: 100px;
+  }
+  .track-shot .wide {
+    flex: 2;
+    min-width: 180px;
+  }
+  .track-shot .offset-left {
+    transform: translateX(8px) ;
+  }
+  .track-shot .offset-right {
+    transform: translateX(-8px) ;
+  }
+  .track-shot .animate-update {
+    animation: pulse 0.3s ease;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  /* Dark mode styles for Track Your Shot module */
+  body.dark-mode .track-shot {
+    background: #2f343a;
+    color: #f3f4f6;
+  }
+  body.dark-mode .track-shot .shot-type-card {
+    background: #3b4148;
+    color: #f3f4f6;
+  }
+  body.dark-mode .track-shot .shot-type-card button {
+    background: #374151;
+    color: #f3f4f6;
+    border-color: #4b5563;
+  }
+  body.dark-mode .track-shot .shot-type-card button:hover {
+    background: #4b5563;
+  }
+  body.dark-mode .track-shot .shot-type-card.active {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.625);
+  }
+  body.dark-mode .track-shot select,
+  body.dark-mode .track-shot textarea {
+    background: #23272f;
+    color: #f3f4f6;
+    border-color: #444c57;
+  }
+  body.dark-mode .track-shot .cue-ball-canvas {
+    border-color: #444c57;
+  }
+  body.dark-mode .track-shot .outcome-btn.success {
+    background: linear-gradient(135deg, #267a4a, #205c8a);
+  }
+  body.dark-mode .track-shot .outcome-btn.miss {
+    background: linear-gradient(135deg, #a94442, #a8325e);
+  }
+  body.dark-mode .track-shot .shot-history-table th {
+    background: #23272f;
+  }
+  body.dark-mode .track-shot .shot-history-table td {
+    background: #23272f;
+  }
+  body.dark-mode .track-shot .shot-history-table th,
+  body.dark-mode .track-shot .shot-history-table td {
+    border-color: #444c57;
+  }
+  body.dark-mode .track-shot .scroll-slider {
+    background: #4A5568;
+  }
+  body.dark-mode .track-shot .scroll-slider::-webkit-slider-thumb {
+    background: #E2E8F0;
+    box-shadow: 0 0 6px rgba(226, 232, 240, 0.5);
+  }
+  body.dark-mode .track-shot .scroll-slider::-moz-range-thumb {
+    background: #E2E8F0;
+    box-shadow: 0 0 6px rgba(226, 232, 240, 0.5);
+  }
+  body.dark-mode .track-shot .power-slider {
+    background: linear-gradient(160deg, #7affa0, #ea5454);
+  }
+  body.dark-mode .track-shot .power-slider::-webkit-slider-thumb {
+    background: #E2E8F0;
+    box-shadow: 0 0 8px rgba(226, 232, 240, 0.5);
+  }
+  body.dark-mode .track-shot .power-slider::-moz-range-thumb {
+    background: #E2E8F0;
+    box-shadow: 0 0 8px rgba(226, 232, 240, 0.5);
+  }
